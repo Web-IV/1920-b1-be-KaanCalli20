@@ -14,6 +14,11 @@ namespace Web4BackEnd.Data.Mappers
         {
             builder.ToTable("Attractie");
             builder.HasKey(m => m.Id);
+            builder.Property(m => m.Naam)
+                .IsRequired()
+                .HasMaxLength(50);
+            builder.Property(p => p.Omschrijving)
+                .IsRequired();
         }
     }
 }

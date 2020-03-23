@@ -14,9 +14,15 @@ namespace Web4BackEnd.Controllers
     {
         private readonly ILocatieRepository _locatieRepository;
 
-        LocatieController(ILocatieRepository locatieRepository)
+        public LocatieController(ILocatieRepository locatieRepository)
         {
             _locatieRepository = locatieRepository;
+        }
+
+        [HttpGet]
+        public IEnumerable<Locatie> GetAttracties()
+        {
+            return _locatieRepository.getLocaties();
         }
     }
 }

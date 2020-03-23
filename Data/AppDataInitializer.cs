@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,11 @@ namespace Web4BackEnd.Data
     public class AppDataInitializer
     {
         private readonly ApplicationDbContext _dbContext;
-        //private readonly UserManager<Gebruiker> _userManager;
-        public AppDataInitializer(ApplicationDbContext context/*, UserManager<Gebruiker> userManager*/)
+        private readonly UserManager<IdentityUser> _userManager;
+        public AppDataInitializer(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             this._dbContext = context;
-            //this._userManager = userManager;
+            this._userManager = userManager;
         }
         public async Task InitializeData()
         {
@@ -32,8 +33,8 @@ namespace Web4BackEnd.Data
                 _dbContext.Locaties.AddRange(locaties);
 
                 ICollection<Attractie> attracties1 = new List<Attractie>();
-                Attractie attractie1 = new Attractie() { Naam = "Wilde rat", Omschrijving = "Een heel grote attraxtrigorvzoc", TypeAttractie=TypeAttractie.Eenpersoons};
-                Attractie attractie2 = new Attractie() { Naam = "Wilde muis", Omschrijving = "Een heel leuke attraxtrigorvzoc" ,TypeAttractie=TypeAttractie.MeerderePersonen};
+                Attractie attractie1 = new Attractie() { Naam = "Wilde rat", Omschrijving = "Een heel grote attraxtrigorvzoc", TypeAttractie = TypeAttractie.Eenpersoons };
+                Attractie attractie2 = new Attractie() { Naam = "Wilde muis", Omschrijving = "Een heel leuke attraxtrigorvzoc", TypeAttractie = TypeAttractie.MeerderePersonen };
 
                 attracties1.Add(attractie1);
                 attracties1.Add(attractie2);
@@ -54,8 +55,8 @@ namespace Web4BackEnd.Data
                 _dbContext.Evenementen.Add(evenement);
                 ICollection<Attractie> attracties2 = new List<Attractie>();
 
-                Attractie attractie3 = new Attractie() { Naam = "Wilde tijger",  Omschrijving = "Een heel kleine attraxtrigorvzoc",TypeAttractie=TypeAttractie.MeerderePersonen };
-                Attractie attractie4 = new Attractie() { Naam = "KLeine leeuw", Omschrijving = "Een kleien leeuw attraxtrigorvzoc" ,TypeAttractie=TypeAttractie.Eenpersoons};
+                Attractie attractie3 = new Attractie() { Naam = "Wilde tijger", Omschrijving = "Een heel kleine attraxtrigorvzoc", TypeAttractie = TypeAttractie.MeerderePersonen };
+                Attractie attractie4 = new Attractie() { Naam = "KLeine leeuw", Omschrijving = "Een kleien leeuw attraxtrigorvzoc", TypeAttractie = TypeAttractie.Eenpersoons };
 
                 attracties2.Add(attractie3);
                 attracties2.Add(attractie4);
@@ -70,13 +71,31 @@ namespace Web4BackEnd.Data
                     Attracties = attracties2,
                     Locatie = locatie2,
                     StartMoment = datum,
-                    MaxAantalDeelnemers=25
+                    MaxAantalDeelnemers = 25
                 };
 
                 _dbContext.Evenementen.Add(evenement);
 
                 _dbContext.SaveChanges();
+
+                Gebruiker gebruiker1 = new Gebruiker { Email = "Pieter@hogent.be", Voornaam = "Pieter", Achternaam = "De Koning" };
+                gebruiker1.IsAdmin = true;
+                _dbContext.Gebruikers.Add(gebruiker1);
+                await CreateUser(gebruiker1.Email, "P@ssword1111");
+
+                Gebruiker gebruiker2 = new Gebruiker { Email = "John@hogent.be", Voornaam = "John", Achternaam = "Ward" };
+                _dbContext.Gebruikers.Add(gebruiker2);
+                gebruiker2.VoegIngeschrevenEvenementToe(_dbContext.Evenementen.First());
+                await CreateUser(gebruiker2.Email, "P@ssword1111");
+
+                _dbContext.SaveChanges();
             }
         }
+        private async Task CreateUser(string email, string password)
+        {
+            var user = new IdentityUser { UserName = email, Email = email };
+            await _userManager.CreateAsync(user, password);
+        }
+
     }
 }

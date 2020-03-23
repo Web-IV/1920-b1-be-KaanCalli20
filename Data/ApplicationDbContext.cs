@@ -14,6 +14,7 @@ namespace Web4BackEnd.Data
         public DbSet<Evenement> Evenementen { get; set; }
         public DbSet<Attractie> Attracties { get; set; }
         public DbSet<Locatie> Locaties { get; set; }
+        public DbSet<Gebruiker> Gebruikers { get; set; }
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -27,7 +28,9 @@ namespace Web4BackEnd.Data
             builder.ApplyConfiguration(new AttractieConfiguration());
             builder.ApplyConfiguration(new EvenementConfiguration());
             builder.ApplyConfiguration(new LocatieConfiguration());
-            
+            builder.ApplyConfiguration(new GebruikerConfiguration());
+            builder.ApplyConfiguration(new IngeschrevenEvenementConfiguration());
+
         }
     }
 }

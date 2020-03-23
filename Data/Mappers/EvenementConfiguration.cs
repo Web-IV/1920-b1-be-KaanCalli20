@@ -20,6 +20,9 @@ namespace Web4BackEnd.Data.Mappers
             builder.HasOne(m => m.Locatie)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Restrict);
+            builder.Property(p => p.NaamEvent)
+                .IsRequired()
+                .HasMaxLength(50);
         }
     }
 }
