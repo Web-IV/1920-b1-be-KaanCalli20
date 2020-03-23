@@ -39,6 +39,16 @@ namespace Web4BackEnd
             services.AddScoped<ILocatieRepository, LocatieRepository>();
 
             services.AddSwaggerDocument();
+
+            services.AddOpenApiDocument(c =>
+            {
+                c.DocumentName = "apidocs";
+                c.Title = "Evenement API";
+                c.Version = "v1";
+                c.Description = "The Evenement API documentation description.";
+            });
+
+            services.AddCors(options => options.AddPolicy("AllowAllOrigins", builder => builder.AllowAnyOrigin()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -9,6 +9,8 @@ using Web4BackEnd.Modals.Domain;
 
 namespace Web4BackEnd.Controllers
 {
+    [ApiConventionType(typeof(DefaultApiConventions))]
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class EvenenemtController : ControllerBase
@@ -24,6 +26,11 @@ namespace Web4BackEnd.Controllers
             _attractieRepository = attractieRepository;
         }
 
+        // GET: api/Evenementen
+        /// <summary>
+        /// Get all evenenmenten ordered by Date
+        /// </summary>
+        /// <returns>array of evenementen</returns>
         [HttpGet]
         public IEnumerable<Evenement> GetEvenementen()
         {
