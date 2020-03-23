@@ -21,20 +21,27 @@ namespace Web4BackEnd.Data
             _dbContext.Database.EnsureDeleted();
             if (_dbContext.Database.EnsureCreated())
             {
+
                 ICollection<Locatie> locaties = new List<Locatie>();
                 Locatie locatie1 = new Locatie() { LocatieNaam = "Schotte", Straat = "eenmeistraat", Nr = "15", PlaatsNaam = "Aalst", Postcode = "9300" };
-                locaties.Add(locatie1);
+
                 Locatie locatie2 = new Locatie() { LocatieNaam = "Sporthal", Straat = "paardstraat", Nr = "11", PlaatsNaam = "Gent", Postcode = "9000" };
+
+                locaties.Add(locatie1);
                 locaties.Add(locatie2);
                 _dbContext.Locaties.AddRange(locaties);
 
                 ICollection<Attractie> attracties1 = new List<Attractie>();
-                Attractie attractie = new Attractie() { Naam = "Wilde muis", Capaciteit = 25, Omschrijving = "Een heel leuke attraxtrigorvzoc" };
-                attracties1.Add(attractie);
-                Attractie attractie1 = new Attractie() { Naam = "Wilde rat", Capaciteit = 15, Omschrijving = "Een heel grote attraxtrigorvzoc" };
+                Attractie attractie1 = new Attractie() { Naam = "Wilde rat", Omschrijving = "Een heel grote attraxtrigorvzoc", TypeAttractie=TypeAttractie.Eenpersoons};
+                Attractie attractie2 = new Attractie() { Naam = "Wilde muis", Omschrijving = "Een heel leuke attraxtrigorvzoc" ,TypeAttractie=TypeAttractie.MeerderePersonen};
+
                 attracties1.Add(attractie1);
+                attracties1.Add(attractie2);
+
                 _dbContext.Attracties.AddRange(attracties1);
+
                 DateTime datum = new DateTime(2020, 04, 17, 11, 0, 0);
+
                 Evenement evenement = new Evenement()
                 {
                     NaamEvent = "Evenement0001",
@@ -47,12 +54,16 @@ namespace Web4BackEnd.Data
                 _dbContext.Evenementen.Add(evenement);
                 ICollection<Attractie> attracties2 = new List<Attractie>();
 
-                Attractie attractie2 = new Attractie() { Naam = "Wilde tijger", Capaciteit = 10, Omschrijving = "Een heel kleine attraxtrigorvzoc" };
-                attracties2.Add(attractie2);
-                Attractie attractie3 = new Attractie() { Naam = "KLeine leeuw", Capaciteit = 19, Omschrijving = "Een kleien leeuw attraxtrigorvzoc" };
+                Attractie attractie3 = new Attractie() { Naam = "Wilde tijger",  Omschrijving = "Een heel kleine attraxtrigorvzoc",TypeAttractie=TypeAttractie.MeerderePersonen };
+                Attractie attractie4 = new Attractie() { Naam = "KLeine leeuw", Omschrijving = "Een kleien leeuw attraxtrigorvzoc" ,TypeAttractie=TypeAttractie.Eenpersoons};
+
                 attracties2.Add(attractie3);
+                attracties2.Add(attractie4);
+
                 _dbContext.Attracties.AddRange(attracties2);
+
                 datum = new DateTime(2020, 04, 11, 10, 0, 0);
+
                 evenement = new Evenement()
                 {
                     NaamEvent = "Evenement0002",
@@ -61,9 +72,8 @@ namespace Web4BackEnd.Data
                     StartMoment = datum,
                     MaxAantalDeelnemers=25
                 };
+
                 _dbContext.Evenementen.Add(evenement);
-
-
 
                 _dbContext.SaveChanges();
             }

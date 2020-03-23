@@ -27,6 +27,12 @@ namespace Web4BackEnd.Data.Repositories
         {
             return _attracties.ToList();
         }
+
+        public IEnumerable<Attractie> GetAttractiesByType(TypeAttractie? type)
+        {
+            return GetAttracties().Where(m => m.TypeAttractie == type);
+        }
+
         public void Add(Attractie attractie)
         {
             _attracties.Add(attractie);
@@ -42,11 +48,11 @@ namespace Web4BackEnd.Data.Repositories
             _attracties.Remove(attractie);
         }
 
-        
-
         public void SaveChanges()
         {
             _dbContext.SaveChanges();
         }
+
+        
     }
 }
