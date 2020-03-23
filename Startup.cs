@@ -38,6 +38,7 @@ namespace Web4BackEnd
             services.AddScoped<IEvenementRepository, EvenementRepository>();
             services.AddScoped<ILocatieRepository, LocatieRepository>();
 
+            services.AddSwaggerDocument();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +51,8 @@ namespace Web4BackEnd
 
             app.UseHttpsRedirection();
 
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
             app.UseRouting();
 
             app.UseAuthorization();

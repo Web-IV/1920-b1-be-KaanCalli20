@@ -11,6 +11,9 @@ namespace Web4BackEnd.Modals.Domain
 
         IEnumerable<Locatie> getLocaties();
 
+        void Add(Locatie locatie);
+        void Delete(Locatie locatie);
+        void Update(Locatie locatie);
         void SaveChanges();
     }
 }

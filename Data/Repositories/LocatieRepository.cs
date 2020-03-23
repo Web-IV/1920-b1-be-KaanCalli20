@@ -27,6 +27,20 @@ namespace Web4BackEnd.Data.Repositories
         {
             return _locaties.ToList();
         }
+        public void Add(Locatie locatie)
+        {
+            _locaties.Add(locatie);
+        }
+
+        public void Update(Locatie locatie)
+        {
+            _locaties.Update(locatie);
+        }
+
+        public void Delete(Locatie locatie)
+        {
+            _locaties.Remove(locatie);
+        }
 
         public void SaveChanges()
         {

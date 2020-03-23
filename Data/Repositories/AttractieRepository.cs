@@ -27,6 +27,22 @@ namespace Web4BackEnd.Data.Repositories
         {
             return _attracties.ToList();
         }
+        public void Add(Attractie attractie)
+        {
+            _attracties.Add(attractie);
+        }
+
+        public void Update(Attractie attractie)
+        {
+            _attracties.Update(attractie);
+        }
+
+        public void Delete(Attractie attractie)
+        {
+            _attracties.Remove(attractie);
+        }
+
+        
 
         public void SaveChanges()
         {

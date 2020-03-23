@@ -10,7 +10,9 @@ namespace Web4BackEnd.Modals.Domain
         Evenement getEvenementById(int Id);
 
         IEnumerable<Evenement> getEvenementen();
-
+        void Add(Evenement evenement);
+        void Delete(Evenement evenement);
+        void Update(Evenement evenement);
         void SaveChanges();
     }
 }

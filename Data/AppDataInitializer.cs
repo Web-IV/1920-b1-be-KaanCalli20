@@ -41,7 +41,7 @@ namespace Web4BackEnd.Data
                     Attracties = attracties1,
                     Locatie = locatie1,
                     StartMoment = datum,
-                    Status = StatusEvenement.GaatDoor
+                    MaxAantalDeelnemers = 150
 
                 };
                 _dbContext.Evenementen.Add(evenement);
@@ -59,7 +59,7 @@ namespace Web4BackEnd.Data
                     Attracties = attracties2,
                     Locatie = locatie2,
                     StartMoment = datum,
-                    Status = StatusEvenement.GaatNietDoor
+                    MaxAantalDeelnemers=25
                 };
                 _dbContext.Evenementen.Add(evenement);
 

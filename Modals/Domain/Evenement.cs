@@ -7,17 +7,37 @@ namespace Web4BackEnd.Modals.Domain
 {
     public class Evenement
     {
-        public int Id { get; set; }
+        #region Properties
+        public int Id { get;  set; }
         public string NaamEvent { get; set; }
         public DateTime StartMoment { get; set; }
+        public int AantalDagen { get; set; }
         public int MaxAantalDeelnemers { get; set; }
-        public StatusEvenement Status { get; set; }
         public Locatie Locatie { get; set; }
         public ICollection<Attractie> Attracties{get;set;}
-        
+        #endregion
         public Evenement()
         {
             Attracties = new List<Attractie>();
+        }
+        
+        public void VoegAttractieToe(Attractie attractie)
+        {
+            if (!Attracties.Contains(attractie))
+            {
+                Attracties.Add(attractie);
+            }
+        }
+        public void VerwijderAttractie(Attractie attractie)
+        {
+            if (Attracties.Contains(attractie))
+            {
+                Attracties.Remove(attractie);
+            }
+        }
+        public Attractie GetAttractie(int attractieId)
+        {
+            return Attracties.SingleOrDefault(m => m.Id == attractieId);
         }
     }
 }

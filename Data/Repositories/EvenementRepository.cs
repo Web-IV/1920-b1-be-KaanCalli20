@@ -27,9 +27,25 @@ namespace Web4BackEnd.Data.Repositories
             return _evenementen.Include(m => m.Locatie).Include(p => p.Attracties).OrderBy(m=>m.StartMoment).ToList();
         }
 
+        public void Add(Evenement evenement)
+        {
+            _evenementen.Add(evenement);
+        }
+
+        public void Update(Evenement evenement)
+        {
+            _evenementen.Update(evenement);
+        }
+
+        public void Delete(Evenement evenement)
+        {
+            _evenementen.Remove(evenement);
+        }
         public void SaveChanges()
         {
             _dbContext.SaveChanges();
         }
+
+        
     }
 }

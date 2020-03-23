@@ -15,12 +15,10 @@ namespace Web4BackEnd.Data.Mappers
             builder.HasKey(m => m.Id);
             builder.HasMany(m => m.Attracties)
                 .WithOne()
-                .IsRequired()
                 .HasForeignKey("EvenementId")
                 .OnDelete(DeleteBehavior.Restrict);
             builder.HasOne(m => m.Locatie)
                 .WithMany()
-                .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

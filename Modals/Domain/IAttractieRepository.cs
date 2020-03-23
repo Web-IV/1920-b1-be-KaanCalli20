@@ -10,7 +10,9 @@ namespace Web4BackEnd.Modals.Domain
         Attractie getAttractieById(int Id);
 
         IEnumerable<Attractie> GetAttracties();
-
+        void Add(Attractie attractie);
+        void Delete(Attractie attractie);
+        void Update(Attractie attractie);
         void SaveChanges();
     }
 }
