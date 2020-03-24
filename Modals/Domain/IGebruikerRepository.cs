@@ -7,8 +7,11 @@ namespace Web4BackEnd.Modals.Domain
 {
     public interface IGebruikerRepository
     {
+        IEnumerable<Gebruiker> GetAll();
         Gebruiker GetBy(string email);
         void Add(Gebruiker gebruiker);
+        void Delete(Gebruiker gebruiker);
         void SaveChanges();
+        
     }
 }

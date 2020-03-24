@@ -22,15 +22,24 @@ namespace Web4BackEnd.Data.Repositories
             _gebruikers.Add(gebruiker);
         }
 
-        public Gebruiker GetBy(string email)
+        public IEnumerable<Gebruiker> GetAll()
         {
             return _gebruikers
                 .Include(c => c.IngeschrevenEvenementen)
                 .ThenInclude(m => m.Evenement)
                 .ThenInclude(p => p.Attracties)
-                .SingleOrDefault(e => e.Email == email);
+                .ToList();
         }
 
+        public Gebruiker GetBy(string email)
+        {
+            return GetAll()
+                .SingleOrDefault(e => e.Email == email);
+        }
+        public void Delete(Gebruiker gebruiker)
+        {
+            _gebruikers.Remove(gebruiker);
+        }
         public void SaveChanges()
         {
             _dbContext.SaveChanges();
