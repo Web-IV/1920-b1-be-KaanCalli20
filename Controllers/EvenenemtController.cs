@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Web4BackEnd.DTOs;
@@ -12,18 +14,21 @@ namespace Web4BackEnd.Controllers
     [ApiConventionType(typeof(DefaultApiConventions))]
     [Produces("application/json")]
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     public class EvenenemtController : ControllerBase
     {
         private readonly IEvenementRepository _evenementRepository;
         private readonly ILocatieRepository _locatieRepository;
         private readonly IAttractieRepository _attractieRepository;
+        private readonly IGebruikerRepository _gebruikerRepository;
         public EvenenemtController(IEvenementRepository evenementRepository, ILocatieRepository locatieRepository,
-            IAttractieRepository attractieRepository)
+            IAttractieRepository attractieRepository,IGebruikerRepository gebruikerRepository)
         {
             _evenementRepository = evenementRepository;
             _locatieRepository = locatieRepository;
             _attractieRepository = attractieRepository;
+            _gebruikerRepository = gebruikerRepository;
         }
 
         // GET: api/Evenementen
@@ -32,6 +37,7 @@ namespace Web4BackEnd.Controllers
         /// </summary>
         /// <returns>array of evenementen</returns>
         [HttpGet]
+        [AllowAnonymous]
         public IEnumerable<Evenement> GetEvenementen()
         {
             return _evenementRepository.getEvenementen().OrderBy(r => r.StartMoment);
@@ -43,6 +49,13 @@ namespace Web4BackEnd.Controllers
             Evenement evenement = _evenementRepository.getEvenementById(id);
             if (evenement == null) return NotFound();
             return evenement;
+        }
+
+        [HttpGet("IngeschrevenEvenementen")]
+        public IEnumerable<IngeschrevenEvenement> GetIngeschrevenEvenementen()
+        {
+            Gebruiker gebruiker = _gebruikerRepository.GetBy(User.Identity.Name);
+            return gebruiker.IngeschrevenEvenementen;
         }
 
         [HttpPost]
