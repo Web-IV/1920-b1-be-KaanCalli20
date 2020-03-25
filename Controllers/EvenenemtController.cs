@@ -37,7 +37,7 @@ namespace Web4BackEnd.Controllers
         /// </summary>
         /// <returns>array of evenementen</returns>
         [HttpGet]
-        [AllowAnonymous]
+       // [AllowAnonymous]
         public IEnumerable<Evenement> GetEvenementen()
         {
             return _evenementRepository.getEvenementen().OrderBy(r => r.StartMoment);

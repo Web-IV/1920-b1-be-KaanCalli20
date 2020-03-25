@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Web4BackEnd.DTOs;
@@ -9,7 +11,10 @@ using Web4BackEnd.Modals.Domain;
 
 namespace Web4BackEnd.Controllers
 {
+    [ApiConventionType(typeof(DefaultApiConventions))]
+    [Produces("application/json")]
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     public class AttractieController : ControllerBase
     {
@@ -21,6 +26,7 @@ namespace Web4BackEnd.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IEnumerable<Attractie> GetAttracties(TypeAttractie? typeAttractie)
         {
             if (!typeAttractie.HasValue)
@@ -64,7 +70,7 @@ namespace Web4BackEnd.Controllers
 
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteRecipe(int id)
+        public IActionResult DeleteLocatie(int id)
         {
             Attractie attractie = _attractieRepository.getAttractieById(id);
             if (attractie == null)
