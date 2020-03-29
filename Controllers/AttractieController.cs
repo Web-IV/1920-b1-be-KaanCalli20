@@ -29,6 +29,7 @@ namespace Web4BackEnd.Controllers
         /// <summary>
         /// Get alle attracties
         /// </summary>
+        /// <param name="typeAttractie">the type of the attractie</param>
         /// <returns>attracties</returns>
         [HttpGet]
         [AllowAnonymous]
