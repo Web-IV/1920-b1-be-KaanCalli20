@@ -37,12 +37,17 @@ namespace Web4BackEnd.Controllers
         /// </summary>
         /// <returns>array of evenementen</returns>
         [HttpGet]
-       // [AllowAnonymous]
+        [AllowAnonymous]
         public IEnumerable<Evenement> GetEvenementen()
         {
             return _evenementRepository.GetEvenementen().OrderBy(r => r.StartMoment);
         }
 
+        // GET: api/Evenement
+        /// <summary>
+        /// Get evenenment by id
+        /// </summary>
+        /// <returns>evenement</returns>
         [HttpGet("{id}")]
         public ActionResult<Evenement> GetEvenement(int id)
         {
@@ -51,6 +56,11 @@ namespace Web4BackEnd.Controllers
             return evenement;
         }
 
+        // GET: api/IngeschrevenEvenementen
+        /// <summary>
+        /// Get ingeschrevenen Evenementen van gebruiker
+        /// </summary>
+        /// <returns>evenement</returns>
         [HttpGet("IngeschrevenEvenementen")]
         public IEnumerable<IngeschrevenEvenement> GetIngeschrevenEvenementen()
         {
@@ -58,6 +68,11 @@ namespace Web4BackEnd.Controllers
             return gebruiker.IngeschrevenEvenementen;
         }
 
+        // Post: api/CreateEvenement
+        /// <summary>
+        /// Create Evenement
+        /// </summary>
+        /// <returns>evenement</returns>
         [HttpPost]
         public ActionResult<Evenement> CreateEvenement(EvenementDTO evenementDTO)
         {
@@ -93,6 +108,11 @@ namespace Web4BackEnd.Controllers
             }
         }
 
+        // Put: api/UpdateEvenement
+        /// <summary>
+        /// Update Evenement
+        /// </summary>
+        /// <returns>evenement</returns>
         [HttpPut("{id}")]
         public IActionResult PutEvenement(int id, Evenement evenement)
         {
@@ -104,7 +124,11 @@ namespace Web4BackEnd.Controllers
             _evenementRepository.SaveChanges();
             return NoContent();
         }
-
+        // Delete: api/DeleteEvenement
+        /// <summary>
+        /// Delete Evenement
+        /// </summary>
+        /// <returns>evenement</returns>
         [HttpDelete("{id}")]
         public IActionResult DeleteEvenement(int id)
         {
@@ -118,6 +142,11 @@ namespace Web4BackEnd.Controllers
             return NoContent();
         }
 
+        // Post: api/GetEvenement
+        /// <summary>
+        /// Get Attractie van Evenement
+        /// </summary>
+        /// <returns>evenement</returns>
         [HttpGet("{id}/attracties/{attractieId}")]
         public ActionResult<Attractie> GetAttractie(int id, int attractieId)
         {

@@ -23,12 +23,23 @@ namespace Web4BackEnd.Controllers
         {
             _gebruikerRepository = gebruikerRepository;
         }
+
+        // GET: api/Gebruikers
+        /// <summary>
+        /// Get all gebruikers
+        /// </summary>
+        /// <returns>gebruiker</returns>
         [HttpGet]
         public IEnumerable<Gebruiker> GetAll()
         {
             return _gebruikerRepository.GetAll();
         }
 
+        // GET: api/Gebruikers
+        /// <summary>
+        /// Get the details of the authenticated gebruiker
+        /// </summary>
+        /// <returns>gebruiker</returns>
         [HttpGet("{email}")]
         public ActionResult<Gebruiker> GetGebruiker(string email)
         {
@@ -39,7 +50,11 @@ namespace Web4BackEnd.Controllers
             }
             return gebruiker;
         }
-
+        // Delete: api/Gebruikers
+        /// <summary>
+        /// Delete the gebruiker
+        /// </summary>
+        /// <returns>gebruiker</returns>
         [HttpDelete("{email}")]
         public ActionResult<Gebruiker> DeleteGebruiker(string email)
         {

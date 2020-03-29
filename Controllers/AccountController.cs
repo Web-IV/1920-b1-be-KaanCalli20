@@ -38,7 +38,10 @@ namespace Web4BackEnd.Controllers
             _gebruikerRepository = gebruikerRepository;
             _config = config;
         }
-
+        /// <summary>
+        /// Login
+        /// </summary>
+        /// <param name="model">the login details</param>
         [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult<String>> CreateToken(LoginDTO model)
@@ -57,6 +60,12 @@ namespace Web4BackEnd.Controllers
             }
             return BadRequest();
         }
+        /// <summary>
+        /// Register a user
+        /// </summary>
+        /// <param name="model">the user details</param>
+        /// <returns></returns>
+
         [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult<String>> Register(RegisterDTO model)
@@ -74,7 +83,11 @@ namespace Web4BackEnd.Controllers
             }
             return BadRequest();
         }
-
+        /// <summary>
+        /// Checks if an email is available as username
+        /// </summary>
+        /// <returns>true if the email is not registered yet</returns>
+        /// <param name="email">Email.</param>/
         [AllowAnonymous]
         [HttpGet("checkusername")]
         public async Task<ActionResult<Boolean>> CheckAvailableUserName(string email)

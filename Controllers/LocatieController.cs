@@ -24,12 +24,21 @@ namespace Web4BackEnd.Controllers
         {
             _locatieRepository = locatieRepository;
         }
-
+        // GET: api/Locaties
+        /// <summary>
+        /// Get all Locaties
+        /// </summary>
+        /// <returns>locaties</returns>
         [HttpGet]
         public IEnumerable<Locatie> GetLocaties()
         {
             return _locatieRepository.GetLocaties();
         }
+        // Post: api/Locaties
+        /// <summary>
+        /// Create Locatie
+        /// </summary>
+        /// <returns>locatie</returns>
         [HttpPost]
         public ActionResult<Attractie> PostLocatie(LocatieDTO locatieDTO)
         {
@@ -39,7 +48,11 @@ namespace Web4BackEnd.Controllers
 
             return CreatedAtAction(nameof(GetLocaties), new { id = locatie.Id }, locatie);
         }
-
+        // Put: api/Locaties
+        /// <summary>
+        /// Update Locatie
+        /// </summary>
+        /// <returns>locatie</returns>
         [HttpPut("{id}")]
         public IActionResult PutLocatie(int id, Locatie locatie)
         {
@@ -52,6 +65,11 @@ namespace Web4BackEnd.Controllers
             return NoContent();
         }
 
+        // Put: api/Locaties
+        /// <summary>
+        /// Delete Locatie
+        /// </summary>
+        /// <returns>No content </returns>
         [HttpDelete("{id}")]
         public IActionResult DeleteLocatie(int id)
         {
