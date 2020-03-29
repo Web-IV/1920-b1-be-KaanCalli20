@@ -18,7 +18,7 @@ namespace Web4BackEnd.Data.Repositories
             _attracties = _dbContext.Attracties;
         }
 
-        public Attractie getAttractieById(int Id)
+        public Attractie GetAttractieById(int Id)
         {
             return GetAttracties().SingleOrDefault(p => p.Id == Id);
         }

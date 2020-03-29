@@ -7,8 +7,8 @@ namespace Web4BackEnd.Modals.Domain
 {
     public interface ILocatieRepository
     {
-        Locatie getLocatieById(int Id);
-        IEnumerable<Locatie> getLocaties();
+        Locatie GetLocatieById(int Id);
+        IEnumerable<Locatie> GetLocaties();
         void Add(Locatie locatie);
         void Delete(Locatie locatie);
         void Update(Locatie locatie);

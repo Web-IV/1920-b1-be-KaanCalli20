@@ -38,7 +38,7 @@ namespace Web4BackEnd.Controllers
         [HttpGet("{id}")]
         public ActionResult<Attractie> GetAttractie(int id)
         {
-            Attractie attractie = _attractieRepository.getAttractieById(id);
+            Attractie attractie = _attractieRepository.GetAttractieById(id);
             if (attractie == null) return NotFound();
             return attractie;
         }
@@ -72,7 +72,7 @@ namespace Web4BackEnd.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteLocatie(int id)
         {
-            Attractie attractie = _attractieRepository.getAttractieById(id);
+            Attractie attractie = _attractieRepository.GetAttractieById(id);
             if (attractie == null)
             {
                 return NotFound();

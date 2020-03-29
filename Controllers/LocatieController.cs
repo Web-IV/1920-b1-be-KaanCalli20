@@ -28,7 +28,7 @@ namespace Web4BackEnd.Controllers
         [HttpGet]
         public IEnumerable<Locatie> GetLocaties()
         {
-            return _locatieRepository.getLocaties();
+            return _locatieRepository.GetLocaties();
         }
         [HttpPost]
         public ActionResult<Attractie> PostLocatie(LocatieDTO locatieDTO)
@@ -55,7 +55,7 @@ namespace Web4BackEnd.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteLocatie(int id)
         {
-            Locatie locatie = _locatieRepository.getLocatieById(id);
+            Locatie locatie = _locatieRepository.GetLocatieById(id);
             if (locatie == null)
             {
                 return NotFound();

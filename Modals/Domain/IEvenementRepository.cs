@@ -7,9 +7,9 @@ namespace Web4BackEnd.Modals.Domain
 {
     public interface IEvenementRepository
     {
-        Evenement getEvenementById(int Id);
+        Evenement GetEvenementById(int Id);
 
-        IEnumerable<Evenement> getEvenementen();
+        IEnumerable<Evenement> GetEvenementen();
         void Add(Evenement evenement);
         void Delete(Evenement evenement);
         void Update(Evenement evenement);

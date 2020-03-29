@@ -18,12 +18,12 @@ namespace Web4BackEnd.Data.Repositories
             _locaties = _dbContext.Locaties;
         }
 
-        public Locatie getLocatieById(int Id)
+        public Locatie GetLocatieById(int Id)
         {
-            return getLocaties().SingleOrDefault(m => m.Id == Id);
+            return GetLocaties().SingleOrDefault(m => m.Id == Id);
         }
 
-        public IEnumerable<Locatie> getLocaties()
+        public IEnumerable<Locatie> GetLocaties()
         {
             return _locaties.ToList();
         }

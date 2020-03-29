@@ -40,13 +40,13 @@ namespace Web4BackEnd.Controllers
        // [AllowAnonymous]
         public IEnumerable<Evenement> GetEvenementen()
         {
-            return _evenementRepository.getEvenementen().OrderBy(r => r.StartMoment);
+            return _evenementRepository.GetEvenementen().OrderBy(r => r.StartMoment);
         }
 
         [HttpGet("{id}")]
         public ActionResult<Evenement> GetEvenement(int id)
         {
-            Evenement evenement = _evenementRepository.getEvenementById(id);
+            Evenement evenement = _evenementRepository.GetEvenementById(id);
             if (evenement == null) return NotFound();
             return evenement;
         }
@@ -63,7 +63,7 @@ namespace Web4BackEnd.Controllers
         {
             try
             {
-                Locatie locatie = _locatieRepository.getLocatieById(evenementDTO.LocatieId);
+                Locatie locatie = _locatieRepository.GetLocatieById(evenementDTO.LocatieId);
                 if (locatie == null)
                 {
                     return BadRequest();
@@ -78,7 +78,7 @@ namespace Web4BackEnd.Controllers
                 Attractie attractie;
                 foreach (int id in evenementDTO.AttractiesIDs)
                 {
-                    attractie=_attractieRepository.getAttractieById(id);
+                    attractie=_attractieRepository.GetAttractieById(id);
                     if (attractie != null) evenement.VoegAttractieToe(attractie);
                 }
                 
@@ -108,7 +108,7 @@ namespace Web4BackEnd.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteEvenement(int id)
         {
-            Evenement evenement = _evenementRepository.getEvenementById(id);
+            Evenement evenement = _evenementRepository.GetEvenementById(id);
             if (evenement == null)
             {
                 return NotFound();
@@ -121,7 +121,7 @@ namespace Web4BackEnd.Controllers
         [HttpGet("{id}/attracties/{attractieId}")]
         public ActionResult<Attractie> GetAttractie(int id, int attractieId)
         {
-            Evenement evenement = _evenementRepository.getEvenementById(id);
+            Evenement evenement = _evenementRepository.GetEvenementById(id);
             if (evenement==null)
             {
                 return NotFound();

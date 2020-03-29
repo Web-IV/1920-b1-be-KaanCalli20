@@ -17,12 +17,12 @@ namespace Web4BackEnd.Data.Repositories
             _dbContext = dbContext;
             _evenementen = _dbContext.Evenementen;
         }
-        public Evenement getEvenementById(int Id)
+        public Evenement GetEvenementById(int Id)
         {
-            return getEvenementen().SingleOrDefault(p => p.Id == Id);
+            return GetEvenementen().SingleOrDefault(p => p.Id == Id);
         }
 
-        public IEnumerable<Evenement> getEvenementen()
+        public IEnumerable<Evenement> GetEvenementen()
         {
             return _evenementen.Include(m => m.Locatie).Include(p => p.Attracties).OrderBy(m=>m.StartMoment).ToList();
         }

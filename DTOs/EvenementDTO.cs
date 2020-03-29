@@ -20,7 +20,7 @@ namespace Web4BackEnd.DTOs
 
         [Required(ErrorMessage = "AantalDagen is verplicht")]
         [DataType(DataType.DateTime)]
-        public int AantalDagen { get; set; }
+        public DateTime EindMoment { get; set; }
 
         [Required(ErrorMessage = "Aantal deelnemers is verplicht")]
         //[DataType(DataType.Text)]

@@ -7,7 +7,7 @@ namespace Web4BackEnd.Modals.Domain
 {
     public interface IAttractieRepository
     {
-        Attractie getAttractieById(int Id);
+        Attractie GetAttractieById(int Id);
         IEnumerable<Attractie> GetAttracties();
         IEnumerable<Attractie> GetAttractiesByType(TypeAttractie? type);
         void Add(Attractie attractie);
