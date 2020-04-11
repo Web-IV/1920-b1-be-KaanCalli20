@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Web4BackEnd.DTOs;
@@ -37,6 +38,7 @@ namespace Web4BackEnd.Controllers
         /// </summary>
         /// <returns>array of evenementen</returns>
         [HttpGet]
+        [EnableCors]
         [AllowAnonymous]
         public IEnumerable<Evenement> GetEvenementen()
         {

@@ -125,6 +125,8 @@ namespace Web4BackEnd
             app.UseSwaggerUi3();
             app.UseRouting();
 
+            app.UseCors("AllowAllOrigins");
+
             app.UseAuthorization();
             app.UseAuthentication();
 
