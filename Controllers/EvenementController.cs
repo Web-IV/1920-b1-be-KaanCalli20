@@ -17,13 +17,13 @@ namespace Web4BackEnd.Controllers
     [Route("api/[controller]")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
-    public class EvenenemtController : ControllerBase
+    public class EvenementController : ControllerBase
     {
         private readonly IEvenementRepository _evenementRepository;
         private readonly ILocatieRepository _locatieRepository;
         private readonly IAttractieRepository _attractieRepository;
         private readonly IGebruikerRepository _gebruikerRepository;
-        public EvenenemtController(IEvenementRepository evenementRepository, ILocatieRepository locatieRepository,
+        public EvenementController(IEvenementRepository evenementRepository, ILocatieRepository locatieRepository,
             IAttractieRepository attractieRepository,IGebruikerRepository gebruikerRepository)
         {
             _evenementRepository = evenementRepository;
