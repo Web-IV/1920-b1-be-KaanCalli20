@@ -15,6 +15,16 @@ namespace Web4BackEnd.Modals.Domain
         public Gebruiker Gebruiker { get; set; }
 
         public Evenement Evenement { get; set; }
+
+        public IngeschrevenEvenement() { }
+
+        public IngeschrevenEvenement(Evenement evenement, Gebruiker gebruiker)
+        {
+            this.Gebruiker = gebruiker;
+            this.GebruikerId = gebruiker.GebruikerId;
+            this.Evenement = evenement;
+            this.EvenementId = evenement.Id;
+        }
         #endregion
     }
 }

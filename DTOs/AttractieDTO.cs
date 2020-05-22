@@ -16,7 +16,7 @@ namespace Web4BackEnd.DTOs
 
         [Required(ErrorMessage = "Omschrijving van de attractie is verplicht")]
         [DataType(DataType.Text)]
-        [MinLength(25, ErrorMessage = "Omschrijving moet minstens 25 karakters bevatten!")]
+        [MinLength(10, ErrorMessage = "Omschrijving moet minstens 10 karakters bevatten!")]
         public string Omschrijving { get; set; }
 
         [Required(ErrorMessage ="Type is verplicht!")]

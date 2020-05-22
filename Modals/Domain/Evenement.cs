@@ -10,6 +10,7 @@ namespace Web4BackEnd.Modals.Domain
         #region Properties
         public int Id { get; set; }
         public string NaamEvent { get; set; }
+        public string Omschrijving { get; set; }
         public DateTime StartMoment { get; set; }
         public DateTime EindMoment { get; set; }
         public int MaxAantalDeelnemers { get; set; }

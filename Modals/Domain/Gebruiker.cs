@@ -35,7 +35,7 @@ namespace Web4BackEnd.Modals.Domain
 
         public void VoegIngeschrevenEvenementToe(Evenement evenement){
 
-            IngeschrevenEvenementen.Add(new IngeschrevenEvenement() { EvenementId = evenement.Id, GebruikerId = this.GebruikerId, Evenement = evenement, Gebruiker = this });
+            IngeschrevenEvenementen.Add(new IngeschrevenEvenement(evenement,this) );
         }
         #endregion
     }

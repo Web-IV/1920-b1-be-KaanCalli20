@@ -33,5 +33,8 @@ namespace Web4BackEnd.DTOs
         [DataType(DataType.Text)]
         [MinLength(3, ErrorMessage = "Naam moet minstens 3 karakters bevatten!")]
         public string PlaatsNaam { get; set; }
+
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
     }
 }

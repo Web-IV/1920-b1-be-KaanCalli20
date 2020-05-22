@@ -30,6 +30,7 @@ namespace Web4BackEnd.Controllers
         /// </summary>
         /// <returns>locaties</returns>
         [HttpGet]
+        [AllowAnonymous]
         public IEnumerable<Locatie> GetLocaties()
         {
             return _locatieRepository.GetLocaties();

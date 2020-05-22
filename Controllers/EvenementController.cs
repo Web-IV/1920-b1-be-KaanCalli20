@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -51,6 +52,7 @@ namespace Web4BackEnd.Controllers
         /// </summary>
         /// <returns>evenement</returns>
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public ActionResult<Evenement> GetEvenement(int id)
         {
             Evenement evenement = _evenementRepository.GetEvenementById(id);
@@ -58,17 +60,7 @@ namespace Web4BackEnd.Controllers
             return evenement;
         }
 
-        // GET: api/IngeschrevenEvenementen
-        /// <summary>
-        /// Get ingeschrevenen Evenementen van gebruiker
-        /// </summary>
-        /// <returns>evenement</returns>
-        [HttpGet("IngeschrevenEvenementen")]
-        public IEnumerable<IngeschrevenEvenement> GetIngeschrevenEvenementen()
-        {
-            Gebruiker gebruiker = _gebruikerRepository.GetBy(User.Identity.Name);
-            return gebruiker.IngeschrevenEvenementen;
-        }
+        
 
         // Post: api/CreateEvenement
         /// <summary>
@@ -88,14 +80,17 @@ namespace Web4BackEnd.Controllers
                 Evenement evenement = new Evenement()
                 {
                     NaamEvent = evenementDTO.NaamEvent,
+                    Omschrijving=evenementDTO.Omschrijving,
                     Locatie = locatie,
                     MaxAantalDeelnemers = evenementDTO.MaxAantalDeelnemers,
-                    StartMoment = evenementDTO.StartMoment
+                    EindMoment = evenementDTO.getEindMoment(),
+                    StartMoment = evenementDTO.getStartMoment()
+                    
                 };
-                Attractie attractie;
-                foreach (int id in evenementDTO.AttractiesIDs)
+              
+                foreach (int attractieId in evenementDTO.AttractiesIds)
                 {
-                    attractie=_attractieRepository.GetAttractieById(id);
+                    Attractie attractie = _attractieRepository.GetAttractieById(attractieId);
                     if (attractie != null) evenement.VoegAttractieToe(attractie);
                 }
                 
@@ -132,6 +127,7 @@ namespace Web4BackEnd.Controllers
         /// </summary>
         /// <returns>evenement</returns>
         [HttpDelete("{id}")]
+        [AllowAnonymous]
         public IActionResult DeleteEvenement(int id)
         {
             Evenement evenement = _evenementRepository.GetEvenementById(id);

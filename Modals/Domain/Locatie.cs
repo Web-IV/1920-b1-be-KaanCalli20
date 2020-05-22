@@ -13,6 +13,8 @@ namespace Web4BackEnd.Modals.Domain
         public string Nr { get; set; }
         public string Postcode { get; set; }
         public string PlaatsNaam { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
 
     }
 }
