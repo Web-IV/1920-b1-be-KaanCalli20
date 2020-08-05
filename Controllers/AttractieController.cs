@@ -61,7 +61,6 @@ namespace Web4BackEnd.Controllers
         /// </summary>
         /// <returns>attracties</returns>
         [HttpPost]
-        [AllowAnonymous]
         public ActionResult<Attractie> PostAttractie(AttractieDTO attractieDTO)
         {
             Attractie attractie = new Attractie() { Naam = attractieDTO.Naam, Omschrijving = attractieDTO.Omschrijving, TypeAttractie = attractieDTO.TypeAttractie };
@@ -98,7 +97,6 @@ namespace Web4BackEnd.Controllers
         /// <param name="id">the id of the attractuie</param>
         /// <returns>No content</returns>
         [HttpDelete("{id}")]
-        [AllowAnonymous]
         public IActionResult DeleteLocatie(int id)
         {
             Attractie attractie = _attractieRepository.GetAttractieById(id);

@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Namotion.Reflection;
 using Web4BackEnd.DTOs;
 using Web4BackEnd.Modals.Domain;
 
@@ -24,6 +26,7 @@ namespace Web4BackEnd.Controllers
         private readonly ILocatieRepository _locatieRepository;
         private readonly IAttractieRepository _attractieRepository;
         private readonly IGebruikerRepository _gebruikerRepository;
+
         public EvenementController(IEvenementRepository evenementRepository, ILocatieRepository locatieRepository,
             IAttractieRepository attractieRepository,IGebruikerRepository gebruikerRepository)
         {
@@ -127,7 +130,6 @@ namespace Web4BackEnd.Controllers
         /// </summary>
         /// <returns>evenement</returns>
         [HttpDelete("{id}")]
-        [AllowAnonymous]
         public IActionResult DeleteEvenement(int id)
         {
             Evenement evenement = _evenementRepository.GetEvenementById(id);
@@ -157,6 +159,70 @@ namespace Web4BackEnd.Controllers
             if (attractie == null)
                 return NotFound();
             return attractie;
+        }
+
+        // Put: api/Evenement/Inschrijven
+        /// <summary>
+        /// Deelnemer inschrijven
+        /// </summary>
+        /// <returns>evenement</returns>
+        [HttpPut("{id}")]
+        public IActionResult Inschrijven(int id)
+        {
+            try
+            {
+                Gebruiker gebruiker = this._gebruikerRepository.GetBy(HttpContext.User.Identity.Name);
+                if (gebruiker == null)
+                {
+                    return NotFound("Gebruiker bestaat niet");
+                }
+                
+                Evenement evenement = this._evenementRepository.GetEvenementById(id);
+                if (evenement == null)
+                {
+                    return NotFound("Evenement bestaat niet");
+                }
+                evenement.SchrijfIn(gebruiker);
+                _evenementRepository.SaveChanges();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+        // Put: api/Evenement/Uitschrijven
+        /// <summary>
+        /// Deelnemer Uitschrijven
+        /// </summary>
+        /// <returns>evenement</returns>
+        [HttpPut("{id}")]
+        public ActionResult<Evenement>Uitschrijven(int id)
+        {
+            try
+            {
+
+                Gebruiker gebruiker = this._gebruikerRepository.GetBy(HttpContext.User.Identity.Name);
+                if (gebruiker == null)
+                {
+                    return NotFound("Gebruiker bestaat niet");
+                }
+
+                Evenement evenement = this._evenementRepository.GetEvenementById(id);
+                if (evenement == null)
+                {
+                    return NotFound("Evenement bestaat niet");
+                }
+                evenement.SchrijfUit(gebruiker);
+                _evenementRepository.SaveChanges();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Web4BackEnd.Data.Mappers
                 .WithMany(m=>m.IngeschrevenEvenementen)
                 .HasForeignKey(f => f.GebruikerId);
             builder.HasOne(p => p.Evenement)
-                .WithMany(m => m.IngeschrevenGebruikers)
+                .WithMany(m => m.Deelnemers)
                 .HasForeignKey(m => m.EvenementId);
         }
     }

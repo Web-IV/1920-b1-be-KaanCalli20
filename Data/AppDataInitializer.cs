@@ -19,7 +19,7 @@ namespace Web4BackEnd.Data
         }
         public async Task InitializeData()
         {
-            /*_dbContext.Database.EnsureDeleted();
+            _dbContext.Database.EnsureDeleted();
             if (_dbContext.Database.EnsureCreated())
             {
 
@@ -130,7 +130,7 @@ namespace Web4BackEnd.Data
                 await CreateUser(gebruiker2.Email, "P@ssword1111");
 
                 _dbContext.SaveChanges();
-            }*/
+            }
         }
         private async Task CreateUser(string email, string password)
         {
