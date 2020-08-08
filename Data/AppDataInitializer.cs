@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Web4BackEnd.Modals.Domain;
 
@@ -12,10 +13,13 @@ namespace Web4BackEnd.Data
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly UserManager<IdentityUser> _userManager;
-        public AppDataInitializer(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        private readonly RoleManager<IdentityRole> _roleManager;
+
+        public AppDataInitializer(ApplicationDbContext context, UserManager<IdentityUser> userManager,RoleManager<IdentityRole> roleManager)
         {
             this._dbContext = context;
             this._userManager = userManager;
+            this._roleManager = roleManager;
         }
         public async Task InitializeData()
         {
@@ -122,20 +126,26 @@ namespace Web4BackEnd.Data
                 Gebruiker gebruiker1 = new Gebruiker { Email = "Pieter@hogent.be", Voornaam = "Pieter", Achternaam = "De Koning" };
                 gebruiker1.IsAdmin = true;
                 _dbContext.Gebruikers.Add(gebruiker1);
-                await CreateUser(gebruiker1.Email, "P@ssword1111");
-
+                await CreateUser(gebruiker1.Email, "P@ssword1111","Admin");
+                
                 Gebruiker gebruiker2 = new Gebruiker { Email = "John@hogent.be", Voornaam = "John", Achternaam = "Ward" };
                 _dbContext.Gebruikers.Add(gebruiker2);
                 gebruiker2.VoegIngeschrevenEvenementToe(_dbContext.Evenementen.First());
-                await CreateUser(gebruiker2.Email, "P@ssword1111");
+                await CreateUser(gebruiker2.Email, "P@ssword1111","Lid");
 
                 _dbContext.SaveChanges();
             }
         }
-        private async Task CreateUser(string email, string password)
+        private async Task CreateUser(string email, string password,string rol)
         {
             var user = new IdentityUser { UserName = email, Email = email };
             await _userManager.CreateAsync(user, password);
+            //await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role,rol));
+            IdentityRole identityRole = new IdentityRole(rol);
+            await _roleManager.CreateAsync(identityRole);
+            await _userManager.AddToRoleAsync(user, rol);
+
+
         }
 
     }

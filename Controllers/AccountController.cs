@@ -73,7 +73,7 @@ namespace Web4BackEnd.Controllers
             IdentityUser user = new IdentityUser { UserName = model.Email, Email = model.Email };
             Gebruiker gebruiker = new Gebruiker { Email = model.Email, Voornaam = model.FirstName, Achternaam = model.LastName };
             var result = await _userManager.CreateAsync(user, model.Password);
-
+            await _userManager.AddToRoleAsync(user, "Lid");
             if (result.Succeeded)
             {
                 _gebruikerRepository.Add(gebruiker);
@@ -98,11 +98,16 @@ namespace Web4BackEnd.Controllers
 
         private String GetToken(IdentityUser user)
         {
+            var role =  _userManager.GetRolesAsync(user).Result;
+            IdentityOptions _options = new IdentityOptions();
+
             // Create the token
             var claims = new[]
             {
               new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-              new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName)
+              new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
+              new Claim(_options.ClaimsIdentity.RoleClaimType, role.FirstOrDefault())
+            
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));

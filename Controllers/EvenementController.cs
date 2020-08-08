@@ -28,7 +28,7 @@ namespace Web4BackEnd.Controllers
         private readonly IGebruikerRepository _gebruikerRepository;
 
         public EvenementController(IEvenementRepository evenementRepository, ILocatieRepository locatieRepository,
-            IAttractieRepository attractieRepository,IGebruikerRepository gebruikerRepository)
+            IAttractieRepository attractieRepository, IGebruikerRepository gebruikerRepository)
         {
             _evenementRepository = evenementRepository;
             _locatieRepository = locatieRepository;
@@ -63,7 +63,7 @@ namespace Web4BackEnd.Controllers
             return evenement;
         }
 
-        
+
 
         // Post: api/CreateEvenement
         /// <summary>
@@ -71,10 +71,12 @@ namespace Web4BackEnd.Controllers
         /// </summary>
         /// <returns>evenement</returns>
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult<Evenement> CreateEvenement(EvenementDTO evenementDTO)
         {
             try
             {
+
                 Locatie locatie = _locatieRepository.GetLocatieById(evenementDTO.LocatieId);
                 if (locatie == null)
                 {
@@ -83,26 +85,26 @@ namespace Web4BackEnd.Controllers
                 Evenement evenement = new Evenement()
                 {
                     NaamEvent = evenementDTO.NaamEvent,
-                    Omschrijving=evenementDTO.Omschrijving,
+                    Omschrijving = evenementDTO.Omschrijving,
                     Locatie = locatie,
                     MaxAantalDeelnemers = evenementDTO.MaxAantalDeelnemers,
                     EindMoment = evenementDTO.getEindMoment(),
                     StartMoment = evenementDTO.getStartMoment()
-                    
+
                 };
-              
+
                 foreach (int attractieId in evenementDTO.AttractiesIds)
                 {
                     Attractie attractie = _attractieRepository.GetAttractieById(attractieId);
                     if (attractie != null) evenement.VoegAttractieToe(attractie);
                 }
-                
+
                 _evenementRepository.Add(evenement);
                 _evenementRepository.SaveChanges();
                 return CreatedAtAction(nameof(GetEvenement), new { id = evenement.Id }, evenement);
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -151,7 +153,7 @@ namespace Web4BackEnd.Controllers
         public ActionResult<Attractie> GetAttractie(int id, int attractieId)
         {
             Evenement evenement = _evenementRepository.GetEvenementById(id);
-            if (evenement==null)
+            if (evenement == null)
             {
                 return NotFound();
             }
@@ -161,14 +163,15 @@ namespace Web4BackEnd.Controllers
             return attractie;
         }
 
-        // Put: api/Evenement/Inschrijven
+        // Post: api/Evenement/Inschrijven
         /// <summary>
         /// Deelnemer inschrijven
         /// </summary>
         /// <returns>evenement</returns>
-        [HttpPut("{id}")]
+        [HttpPost("inschrijven")]
         public IActionResult Inschrijven(int id)
         {
+            Console.WriteLine("geraakt");
             try
             {
                 Gebruiker gebruiker = this._gebruikerRepository.GetBy(HttpContext.User.Identity.Name);
@@ -176,7 +179,7 @@ namespace Web4BackEnd.Controllers
                 {
                     return NotFound("Gebruiker bestaat niet");
                 }
-                
+
                 Evenement evenement = this._evenementRepository.GetEvenementById(id);
                 if (evenement == null)
                 {
@@ -192,13 +195,13 @@ namespace Web4BackEnd.Controllers
             }
 
         }
-        // Put: api/Evenement/Uitschrijven
+        /// Put: api/Evenement/Uitschrijven
         /// <summary>
         /// Deelnemer Uitschrijven
         /// </summary>
         /// <returns>evenement</returns>
-        [HttpPut("{id}")]
-        public ActionResult<Evenement>Uitschrijven(int id)
+        [HttpPut("uitschrijven")]
+        public IActionResult Uitschrijven(int id)
         {
             try
             {
@@ -224,5 +227,15 @@ namespace Web4BackEnd.Controllers
             }
 
         }
+        /*/// Get: api/Evenement/checkIngeschreven
+        /// <summary>
+        /// Deelnemer Uitschrijven
+        /// </summary>
+        /// <returns>boolean</returns>
+        [HttpPut("{id}/uitschrijven")]
+        public ActionResult<Boolean> isIngeschreven(int id)
+        {
+            
+        }*/
     }
 }

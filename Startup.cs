@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -44,6 +45,11 @@ namespace Web4BackEnd
             services.AddScoped<IEvenementRepository, EvenementRepository>();
             services.AddScoped<ILocatieRepository, LocatieRepository>();
             services.AddScoped<IGebruikerRepository, GebruikerRepository>();
+
+            services.AddAuthorization(options => {
+                options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
+                options.AddPolicy("Lid", policy => policy.RequireClaim(ClaimTypes.Role, "lid"));
+            });
 
             services.AddIdentity<IdentityUser, IdentityRole>(cfg => cfg.User.RequireUniqueEmail = true).AddEntityFrameworkStores<ApplicationDbContext>();
 
