@@ -270,7 +270,6 @@ namespace Web4BackEnd.Controllers
             try
             {
              
-
                 Evenement evenement = this._evenementRepository.getEvenementByIdIngeschreven(id);
                 if (evenement == null)
                 {

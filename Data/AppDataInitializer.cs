@@ -136,6 +136,14 @@ namespace Web4BackEnd.Data
                 //gebruiker2.VoegIngeschrevenEvenementToe(_dbContext.Evenementen.First());
                 await CreateUser(gebruiker2.Email, "P@ssword1111","Lid");
 
+                gebruiker2 = new Gebruiker { Email = "Kaan@hogent.be", Voornaam = "Kaan", Achternaam = "Calli" };
+                _dbContext.Gebruikers.Add(gebruiker2);
+                await CreateUser(gebruiker2.Email, "P@ssword1111", "Lid");
+
+                gebruiker2 = new Gebruiker { Email = "Bart@hogent.be", Voornaam = "Bart", Achternaam = "pit" };
+                _dbContext.Gebruikers.Add(gebruiker2);
+                await CreateUser(gebruiker2.Email, "P@ssword1111", "Lid");
+
                 _dbContext.SaveChanges();
             }
         }
