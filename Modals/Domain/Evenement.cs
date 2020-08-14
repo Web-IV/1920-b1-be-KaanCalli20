@@ -68,5 +68,12 @@ namespace Web4BackEnd.Modals.Domain
                 throw new ArgumentException("U bent nog niet ingeschreven");
             }
         }
+
+        public Boolean isIngeschreven(Gebruiker gebruiker)
+        {
+            IngeschrevenEvenement deelnemer = Deelnemers.FirstOrDefault(m => m.GebruikerId == gebruiker.GebruikerId && m.EvenementId == this.Id);
+            if (deelnemer == null) return false;
+            else return true;
+        }
     }
 }

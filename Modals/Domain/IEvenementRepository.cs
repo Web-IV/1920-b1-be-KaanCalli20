@@ -14,5 +14,7 @@ namespace Web4BackEnd.Modals.Domain
         void Delete(Evenement evenement);
         void Update(Evenement evenement);
         void SaveChanges();
+
+        Evenement getEvenementByIdIngeschreven(int Id);
     }
 }

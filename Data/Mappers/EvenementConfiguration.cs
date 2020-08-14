@@ -23,6 +23,9 @@ namespace Web4BackEnd.Data.Mappers
             builder.Property(p => p.NaamEvent)
                 .IsRequired()
                 .HasMaxLength(50);
+            builder.HasMany(p => p.Deelnemers)
+                .WithOne()
+                .HasForeignKey("EvenementId");
         }
     }
 }

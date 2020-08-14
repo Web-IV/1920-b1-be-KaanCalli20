@@ -23,7 +23,9 @@ namespace Web4BackEnd.Data.Mappers
             builder.Property(p => p.Email)
                 .IsRequired()
                 .HasMaxLength(100);
-            builder.Ignore(m => m.IngeschrevenEvenementen);
+            builder.HasMany(m => m.IngeschrevenEvenementen)
+                .WithOne()
+                .HasForeignKey("GebruikerId");
 
         }
     }

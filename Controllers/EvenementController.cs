@@ -163,15 +163,15 @@ namespace Web4BackEnd.Controllers
             return attractie;
         }
 
-        // Post: api/Evenement/Inschrijven
+        // Put: api/Evenement/Inschrijven
         /// <summary>
         /// Deelnemer inschrijven
         /// </summary>
         /// <returns>evenement</returns>
-        [HttpPost("inschrijven")]
+        [HttpPut("inschrijven/{id}")]
+        [Authorize(Roles = "Lid")]
         public IActionResult Inschrijven(int id)
         {
-            Console.WriteLine("geraakt");
             try
             {
                 Gebruiker gebruiker = this._gebruikerRepository.GetBy(HttpContext.User.Identity.Name);
@@ -200,7 +200,8 @@ namespace Web4BackEnd.Controllers
         /// Deelnemer Uitschrijven
         /// </summary>
         /// <returns>evenement</returns>
-        [HttpPut("uitschrijven")]
+        [HttpPut("uitschrijven/{id}")]
+        [Authorize(Roles = "Lid")]
         public IActionResult Uitschrijven(int id)
         {
             try
@@ -227,15 +228,63 @@ namespace Web4BackEnd.Controllers
             }
 
         }
-        /*/// Get: api/Evenement/checkIngeschreven
+        /// Get: api/Evenement/checkIngeschreven
         /// <summary>
-        /// Deelnemer Uitschrijven
+        /// checkIngeschreven
         /// </summary>
         /// <returns>boolean</returns>
-        [HttpPut("{id}/uitschrijven")]
+        [HttpGet("isIngeschreven/{id}")]
         public ActionResult<Boolean> isIngeschreven(int id)
         {
-            
-        }*/
+            try
+            {
+                Gebruiker gebruiker = this._gebruikerRepository.GetBy(HttpContext.User.Identity.Name);
+                if (gebruiker == null)
+                {
+                    return NotFound("Gebruiker bestaat niet");
+                }
+
+                Evenement evenement = this._evenementRepository.GetEvenementById(id);
+                if (evenement == null)
+                {
+                    return NotFound("Evenement bestaat niet");
+                }
+
+                return evenement.isIngeschreven(gebruiker);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+        /// Get: api/Evenement/aantalIngeschreven
+        /// <summary>
+        /// Get aantalIngeschreven
+        /// </summary>
+        /// <returns>int</returns>
+        [HttpGet("aantalDeelnemers/{id}")]
+        [AllowAnonymous]
+        public ActionResult<int> aantalIngeschreven(int id)
+        {
+            try
+            {
+             
+
+                Evenement evenement = this._evenementRepository.getEvenementByIdIngeschreven(id);
+                if (evenement == null)
+                {
+                    return NotFound("Evenement bestaat niet");
+                }
+                
+                return evenement.Deelnemers.Count;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
     }
 }

@@ -46,6 +46,14 @@ namespace Web4BackEnd.Data.Repositories
             _dbContext.SaveChanges();
         }
 
-        
+        public Evenement getEvenementByIdIngeschreven(int id)
+        {
+            return  _evenementen.Include(m => m.Locatie).Include(p => p.Attracties).Include(p=>p.Deelnemers)
+                .OrderBy(m => m.StartMoment).ToList().SingleOrDefault(p => p.Id == id);
+
+
+        }
+
+
     }
 }

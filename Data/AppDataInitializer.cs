@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -130,7 +131,9 @@ namespace Web4BackEnd.Data
                 
                 Gebruiker gebruiker2 = new Gebruiker { Email = "John@hogent.be", Voornaam = "John", Achternaam = "Ward" };
                 _dbContext.Gebruikers.Add(gebruiker2);
-                gebruiker2.VoegIngeschrevenEvenementToe(_dbContext.Evenementen.First());
+                evenement =_dbContext.Evenementen.First();
+                evenement.SchrijfIn(gebruiker2);
+                //gebruiker2.VoegIngeschrevenEvenementToe(_dbContext.Evenementen.First());
                 await CreateUser(gebruiker2.Email, "P@ssword1111","Lid");
 
                 _dbContext.SaveChanges();
